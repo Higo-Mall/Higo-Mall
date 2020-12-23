@@ -12,8 +12,9 @@ module.exports = {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {
-          "@styles": "src/styles",
           "@components": "src/components",
+          "@styles": "src/styles",
+          "@static": "src/static",
         },
       }
     },
