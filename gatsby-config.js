@@ -15,6 +15,7 @@ module.exports = {
           "@components": "src/components",
           "@styles": "src/styles",
           "@static": "src/static",
+          "@templates": "src/templates",
         },
       }
     },

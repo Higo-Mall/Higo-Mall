@@ -1,14 +1,15 @@
 import React from "react"
-import "@styles/index.scss"
+import "@styles/pages/index.scss"
+
 import Navbar from "@components/navbar"
-import Slider from "@components/slider"
+import Slider from "@components/index/slider"
 import Footer from "@components/footer"
 
-interface IIndex {
-    [goodsCategory: string]: string[]
+interface IIndexState {
+    goodsCategory: string[]
 }
 
-export default class Index extends React.Component<{}, IIndex> {
+export default class Index extends React.Component<{}, IIndexState> {
     constructor(props) {
         super(props)
         this.state = {
@@ -31,13 +32,11 @@ export default class Index extends React.Component<{}, IIndex> {
                 "图书音像",
             ],
         }
-        // this.getGoodsCategory = this.getGoodsCategory.bind(this);
     }
 
     getGoodsCategory() {
         let list = []
         const goodsCategory = this.state.goodsCategory
-        // for e in this.state.goodsCategory:
         for (let i = 0; i < goodsCategory.length; i++) {
             i === 0
                 ? list.push(
@@ -56,37 +55,37 @@ export default class Index extends React.Component<{}, IIndex> {
 
     render() {
         return (
-            <div id="app">
+            <div id="index">
                 <Navbar />
 
                 <div id="content" className="hero_">
-                    <Slider />
+                    <Slider
+                        amount={6}
+                        imgSrcList={[
+                            "https://img.alicdn.com/imgextra/i1/O1CN01134mwU1nKZ5qy4ELP_!!6000000005071-0-tps-1130-500.jpg_q100.jpg_.webp",
+                            "https://img.alicdn.com/simba/img/TB1w.FwEeL2gK0jSZFmSuw7iXXa.jpg",
+                            "https://img.alicdn.com/tps/i4/https://img.alicdn.com/imgextra/i1/6000000005716/O1CN01c8HD6f1s5yYaZb1qf_!!6000000005716-0-octopus.jpg",
+                            "https://a1.alicdn.com/assets/p4p-fallback/mm_12852562_1778064_37676870.jpg",
+                            "//img.alicdn.com/imgextra/i4/12/O1CN01UqPa9p1BxXOZO8lEH_!!12-0-luban.jpg_q100.jpg_.webp",
+                            "//img.alicdn.com/imgextra/i2/89/O1CN01oKFGmc1CWntYc9pca_!!89-0-luban.jpg_q100.jpg_.webp",
+                        ]}
+                        linkList={["", "", "", "", "", ""]}
+                        bgColorList={[
+                            "202, 20, 33",
+                            "232, 232, 232",
+                            "202, 20, 33",
+                            "232, 232, 232",
+                            "246, 142, 20",
+                            "121, 0, 222",
+                        ]}
+                    />
                     <div className="hero-body">
-                        {/* <div className="columns is-gapless">
-                            <div className="column is-one-quarter">
-                                <div className="category">
-                                    <p className="category-label">商品分类</p>
-                                    <ul className="category-list">
-                                        {this.getGoodsCategory()}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className="column">
-                                <div>
-
-                                </div>
-                            </div>
-                        </div> */}
-
-                        {/* test begin */}
                         <div className="category">
                             <p className="category-label">商品分类</p>
                             <ul className="category-list">
                                 {this.getGoodsCategory()}
                             </ul>
                         </div>
-                        {/* test end */}
                     </div>
                 </div>
 
