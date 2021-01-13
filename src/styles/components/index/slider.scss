@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+@import "bulma";
+
+.slider {
+    z-index: 0;
+    width: 100%;
+    text-align: center;
+
+    .sliderContentWrap {
+        position: absolute;
+
+        width: 100%;
+    }
+
+    .sliderNavWrap {
+        position: relative;
+
+        li {
+            background: #000;
+            width: 30px;
+            height: 10px;
+            display: inline-block;
+            margin-left: 10px;
+            cursor: pointer;
+            opacity: 0.3;
+            z-index: 99;
+        }
+
+        li.sliderNavSelecteded {
+            color: white;
+            opacity: 0.6;
+        }
+    }
+}

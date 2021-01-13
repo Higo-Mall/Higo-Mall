@@ -1,0 +1,138 @@
+@charset "utf-8";
+
+@import "bulma";
+.product-intro {
+    width: 1210px;
+    margin: 0 auto;
+    .preview {
+        @extend .card;
+        float: left;
+        width: 350px;
+    
+        .main-img {
+            @extend .card-content;
+            position: relative;
+            margin-bottom: 20px;
+            padding: 0;
+    
+            .video-icon {
+                position: absolute;
+                // bottom: 62px;
+                cursor: pointer;
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                background: url(//static.360buyimg.com/item/unite/1.0.114/components/default-soa/preview/i/main-circles.png)
+                    0 -55px no-repeat;
+            }
+    
+            .spec-img {
+                width: 350px;
+                height: 350px;
+                // min-height: 300px;
+            }
+        }
+    
+        .spec-list {
+            @extend .card-content;
+            margin-bottom: 18px;
+            position: relative;
+            padding: 0;
+    
+            .arrow {
+                display: block;
+                position: absolute;
+                width: 22px;
+                height: 32px;
+                top: 50%;
+                margin-top: -16px;
+            }
+    
+            .arrow-prev {
+                @extend .arrow;
+                float: left;
+                left: 0;
+                .sprite-arrow-prev {
+                    display: block;
+                    width: 22px;
+                    height: 32px;
+                    background-image: url(//static.360buyimg.com/item/unite/1.0.114/components/default-soa/preview/i/__sprite.png);
+                    background-position: 0 -54px;
+                }
+    
+                &.disabled > .sprite-arrow-prev {
+                    background: url(//static.360buyimg.com/item/unite/1.0.114/components/default-soa/preview/i/disabled-prev.png);
+                }
+            }
+    
+            .arrow-next {
+                @extend .arrow;
+                float: left;
+                right: 0;
+                .sprite-arrow-next {
+                    display: block;
+                    width: 22px;
+                    height: 32px;
+                    background-image: url(//static.360buyimg.com/item/unite/1.0.114/components/default-soa/preview/i/__sprite.png);
+                    background-position: -78px 0;
+                }
+    
+                &.disabled > .sprite-arrow-next {
+                    background: url(//static.360buyimg.com/item/unite/1.0.114/components/default-soa/preview/i/disabled-next.png);
+                }
+            }
+    
+            .spec-nav {
+                position: relative;
+                width: 310px;
+                height: 58px;
+                overflow: hidden;
+                margin: 0 auto;
+    
+                ul > li {
+                    margin: 0 2px;
+                    float: left;
+                    max-width: 60px;
+                    max-height: 70px;
+    
+                    .spec-item {
+                        width: 54px;
+                        height: 54px;
+                        border: 2px solid #fff;
+    
+                        &.selected {
+                            border: 2px solid #e53e41;
+                        }
+                    }
+                }
+            }
+        }
+    
+        .preview-info {
+            @extend .card-footer;
+    
+            a {
+                @extend .card-footer-item;
+            }
+        }
+    }
+    
+    .info {
+        width: 590px;
+        float: left;
+        margin-left: 30px;
+
+        .name {
+            font: 700 16px Arial,"microsoft yahei";
+            // color: #666;
+            padding-top: 10px;
+            line-height: 28px;
+            margin-bottom: 5px;
+        }
+
+        .news {
+            color: #e4393c;
+        }
+    }
+}
+

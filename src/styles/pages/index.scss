@@ -6,28 +6,20 @@
     @extend .hero;
     @extend .is-primary;
     @extend .is-bold;
-    height: 500px;
     .hero-body {
         @extend .py-0;
         position: absolute;
-        // padding: 0 auto;
         width: 100%;
-        z-index: 99;
-        // width: 100%;
-        // height: inherit;
-        // padding-bottom: 42.3%;
+        // z-index: 99;
     }
 }
 
 .category {
     @extend .menu;
     @extend .has-background-grey-darker;
-    // position: absolute;
-    // @extend .is-small;
-    opacity: .9;
-    // flex: none;
+
+    opacity: 0.9;
     width: 15%;
-    // height: 500px;
 }
 
 .category-label {
@@ -40,10 +32,4 @@
     a {
         @extend .has-text-white;
     }
-    
-    // a {
-    //     &:hover {
-    //         background-color: $menu-item-active-background-color
-    //     }
-    // }
 }
