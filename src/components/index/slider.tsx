@@ -38,7 +38,7 @@ class SliderNav extends Nav {
 export default class Slider extends ImgSwitch {
     componentDidMount() {
         setInterval(() => {
-            if (this.state.selectedNo !== this.props.amount) {
+            if (this.state.selectedNo !== this.props.amount - 1) {
                 this.setState({ selectedNo: this.state.selectedNo + 1 })
             } else {
                 this.setState({ selectedNo: 0 })
