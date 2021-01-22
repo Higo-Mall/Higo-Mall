@@ -19,5 +19,30 @@ module.exports = {
         },
       }
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `static`,
+        path: `${__dirname}/static/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-mysql`,
+      options: {
+        connectionDetails: {
+          host: 'localhost',
+          user: 'root',
+          password: '123456',
+          database: 'sql_192_168_201_'
+        },
+        queries: [
+          {
+            statement: 'SELECT * FROM sliders',
+            idFieldName: 'id',
+            name: 'sliders'
+          }
+        ]
+      }
+    },
   ],
 }

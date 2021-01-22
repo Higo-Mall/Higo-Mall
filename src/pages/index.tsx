@@ -1,15 +1,20 @@
 import React from "react"
 import "@styles/pages/index.scss"
+import { graphql } from "gatsby"
 
 import Navbar from "@components/navbar"
 import Slider from "@components/index/slider"
 import Footer from "@components/footer"
 
+interface IIndexProps {
+    Slider: any
+}
+
 interface IIndexState {
     goodsCategory: string[]
 }
 
-export default class Index extends React.Component<{}, IIndexState> {
+class Index extends React.Component<IIndexProps, IIndexState> {
     constructor(props) {
         super(props)
         this.state = {
@@ -59,26 +64,7 @@ export default class Index extends React.Component<{}, IIndexState> {
                 <Navbar />
 
                 <div id="content" className="hero_">
-                    <Slider
-                        amount={6}
-                        imgSrcList={[
-                            "https://img.alicdn.com/imgextra/i1/O1CN01134mwU1nKZ5qy4ELP_!!6000000005071-0-tps-1130-500.jpg_q100.jpg_.webp",
-                            "https://img.alicdn.com/simba/img/TB1w.FwEeL2gK0jSZFmSuw7iXXa.jpg",
-                            "https://img.alicdn.com/tps/i4/https://img.alicdn.com/imgextra/i1/6000000005716/O1CN01c8HD6f1s5yYaZb1qf_!!6000000005716-0-octopus.jpg",
-                            "https://a1.alicdn.com/assets/p4p-fallback/mm_12852562_1778064_37676870.jpg",
-                            "//img.alicdn.com/imgextra/i4/12/O1CN01UqPa9p1BxXOZO8lEH_!!12-0-luban.jpg_q100.jpg_.webp",
-                            "//img.alicdn.com/imgextra/i2/89/O1CN01oKFGmc1CWntYc9pca_!!89-0-luban.jpg_q100.jpg_.webp",
-                        ]}
-                        linkList={["", "", "", "", "", ""]}
-                        bgColorList={[
-                            "202, 20, 33",
-                            "232, 232, 232",
-                            "202, 20, 33",
-                            "232, 232, 232",
-                            "246, 142, 20",
-                            "121, 0, 222",
-                        ]}
-                    />
+                    {this.props.Slider}
                     <div className="hero-body">
                         <div className="category">
                             <p className="category-label">商品分类</p>
@@ -88,9 +74,53 @@ export default class Index extends React.Component<{}, IIndexState> {
                         </div>
                     </div>
                 </div>
-
                 <Footer />
             </div>
         )
     }
 }
+
+export default ({ data }) => {
+    let imgSrcList = []
+    let linkList = []
+    let bgColorList = []
+    const edges = data.allMysqlSliders.edges
+    edges.forEach(element => {
+        const node = element.node
+        imgSrcList.push(node.imgPublicURL)
+        linkList.push(node.link)
+        bgColorList.push(
+            [node.bgColor_R, node.bgColor_G, node.bgColor_B].join(", ")
+        )
+    })
+
+    return (
+        <Index
+            Slider={
+                <Slider
+                    amount={edges.length}
+                    imgSrcList={imgSrcList}
+                    linkList={linkList}
+                    bgColorList={bgColorList}
+                />
+            }
+        ></Index>
+    )
+}
+
+// 从数据库获取本地文件路径
+export const query = graphql`
+    query {
+        allMysqlSliders {
+            edges {
+                node {
+                    imgPublicURL
+                    bgColor_R
+                    bgColor_G
+                    bgColor_B
+                    link
+                }
+            }
+        }
+    }
+`

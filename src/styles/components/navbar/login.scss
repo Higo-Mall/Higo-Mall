@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+@import "bulma";
+
+#loginForm {
+    div {
+        @extend .field;
+        @extend .is-horizontal;
+
+        span:first-child {
+            @extend .field-label;
+            @extend .is-normal;
+
+            label {
+                @extend .label;
+            }
+        }
+
+        span:last-child {
+            @extend .field-body;
+
+            div {
+                @extend .field;
+
+                p {
+                    @extend .control;
+
+                    input {
+                        @extend .input;
+                    }
+                }
+            }
+        }
+    }
+}

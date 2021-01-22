@@ -1,5 +1,4 @@
 import React from "react"
-import "@styles/Bulma.scss"
 
 export default () => {
     return (

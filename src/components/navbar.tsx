@@ -1,8 +1,13 @@
 import React from "react"
-import "@styles/Bulma.scss"
 import Login from "@components/navbar/login"
+import Search from "@components/navbar/search"
 
-export default class Navbar extends React.Component {
+interface INavbarProps {
+    // 搜索功能 页面跳转后在输入框内保留搜索内容
+    searchText?: string
+}
+
+export default class Navbar extends React.Component<INavbarProps> {
     render() {
         return (
             <div
@@ -14,7 +19,6 @@ export default class Navbar extends React.Component {
                     <a className="navbar-item" href="">
                         <div className="is-large">picture</div>
                     </a>
-
                     <a
                         role="button"
                         className="navbar-burger burger"
@@ -49,11 +53,12 @@ export default class Navbar extends React.Component {
 
                     <div className="navbar-end">
                         <div className="navbar-item">
+                            <Search searchText={this.props.searchText} />
+
                             <div className="buttons">
                                 <a className="button is-primary">
                                     <strong>注册</strong>
                                 </a>
-                                {/* <a className="button is-light">登录</a> */}
                                 <Login />
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 import React from "react"
-import "@styles/Bulma.scss"
+import "@styles/components/navbar/login.scss"
 
 interface ILoginState {
     isActive: boolean
@@ -11,8 +11,8 @@ export default class Login extends React.Component<{}, ILoginState> {
         this.state = {
             isActive: false,
         }
-        this.handleActiveClick = this.handleActiveClick.bind(this);
-        this.handleCancelClick = this.handleCancelClick.bind(this);
+        this.handleActiveClick = this.handleActiveClick.bind(this)
+        this.handleCancelClick = this.handleCancelClick.bind(this)
     }
 
     handleActiveClick() {
@@ -27,7 +27,7 @@ export default class Login extends React.Component<{}, ILoginState> {
         return (
             <div id="login">
                 <a
-                    className="button modal-button is-light"
+                    className="button is-light"
                     data-target="login-modal"
                     onClick={this.handleActiveClick}
                 >
@@ -49,12 +49,58 @@ export default class Login extends React.Component<{}, ILoginState> {
                         </div>
 
                         <div className="modal-card-body">
-                            <div className="content"></div>
+                            <div className="content">
+                                <form action="" method="post" id="loginForm">
+                                    {/* loginForm内部样式存于对应的scss文件中 */}
+                                    <div>
+                                        <span>
+                                            <label>用户名</label>
+                                        </span>
+                                        <span>
+                                            <div>
+                                                <p>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="用户名"
+                                                    />
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            <label>密码</label>
+                                        </span>
+                                        <span>
+                                            <div>
+                                                <p>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="密码"
+                                                    />
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
                         <div className="modal-card-foot">
-                            <button className="button is-success">登录</button>
-                            <button className="button" onClick={this.handleCancelClick}>取消</button>
+                            <button
+                                className="button is-success"
+                                type="submit"
+                                form="loginForm"
+                            >
+                                登录
+                            </button>
+                            <button
+                                className="button"
+                                onClick={this.handleCancelClick}
+                            >
+                                取消
+                            </button>
                         </div>
                     </div>
                 </div>
