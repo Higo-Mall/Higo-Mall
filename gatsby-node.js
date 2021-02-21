@@ -3,7 +3,6 @@
 // exports.onCreateNode = ({ node, actions }) => {
 //     const { createNodeField } = actions;
 //     if (node.internal.type === `MysqlItem`) {
-//         // const slug = createFilePath({ node, getNode, basePath: `pages` })
 //         const slug = "pages/item/" + node.mysqlId;
 //         createNodeField({
 //             node,

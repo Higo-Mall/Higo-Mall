@@ -80,12 +80,8 @@ export default () => {
         }
     });
 
-    var r = null;
-
     promise
-        .then((result) => {
-            r = result;
-        })
+        .then((result) => {})
         .catch((error) => {
             // 在此执行navigate会在执行`gatsby build`时触发：
             // UnhandledPromiseRejectionWarning: ReferenceError: window is not defined
@@ -93,8 +89,6 @@ export default () => {
             // navigate("/404");
         });
 
-    console.log(r);
-
     // return <Item introSrcList={[""]} />;
-    return <pre>{}</pre>;
+    return <div></div>;
 };
