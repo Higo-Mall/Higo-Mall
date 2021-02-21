@@ -1,6 +1,8 @@
-import React from "react"
-import { Img, Nav, ImgSwitch } from "@templates/img-switch"
-import "@styles/components/index/slider.scss"
+import React from "react";
+
+import { Img, Nav, ImgSwitch } from "@templates/img-switch";
+
+import "@styles/components/index/slider.scss";
 
 class SliderImg extends Img {
     render() {
@@ -18,7 +20,7 @@ class SliderImg extends Img {
                     <img src={this.props.src} />
                 </a>
             </div>
-        )
+        );
     }
 }
 
@@ -31,7 +33,7 @@ class SliderNav extends Nav {
                 className={this.state.selected ? "sliderNavSelecteded" : ""}
                 onClick={this.props.handleNavClick}
             ></li>
-        )
+        );
     }
 }
 
@@ -39,15 +41,15 @@ export default class Slider extends ImgSwitch {
     componentDidMount() {
         setInterval(() => {
             if (this.state.selectedNo !== this.props.amount - 1) {
-                this.setState({ selectedNo: this.state.selectedNo + 1 })
+                this.setState({ selectedNo: this.state.selectedNo + 1 });
             } else {
-                this.setState({ selectedNo: 0 })
+                this.setState({ selectedNo: 0 });
             }
-        }, 2000)
+        }, 2000);
     }
 
     render() {
-        let sliderNavList = []
+        let sliderNavList = [];
         for (let i = 0; i < this.state.amount; i++) {
             sliderNavList.push(
                 <SliderNav
@@ -56,7 +58,7 @@ export default class Slider extends ImgSwitch {
                     selected={this.state.selectedNo === i}
                     handleNavClick={this.handleNavClick}
                 />
-            )
+            );
         }
 
         return (
@@ -70,6 +72,6 @@ export default class Slider extends ImgSwitch {
                 </div>
                 <ul className="sliderNavWrap">{sliderNavList}</ul>
             </div>
-        )
+        );
     }
 }

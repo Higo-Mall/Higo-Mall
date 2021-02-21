@@ -1,26 +1,27 @@
-import React from "react"
-import "@styles/components/navbar/login.scss"
+import React from "react";
+
+import "@styles/components/navbar/login.scss";
 
 interface ILoginState {
-    isActive: boolean
+    isActive: boolean;
 }
 
 export default class Login extends React.Component<{}, ILoginState> {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             isActive: false,
-        }
-        this.handleActiveClick = this.handleActiveClick.bind(this)
-        this.handleCancelClick = this.handleCancelClick.bind(this)
+        };
+        this.handleActiveClick = this.handleActiveClick.bind(this);
+        this.handleCancelClick = this.handleCancelClick.bind(this);
     }
 
     handleActiveClick() {
-        this.setState({ isActive: true })
+        this.setState({ isActive: true });
     }
 
     handleCancelClick() {
-        this.setState({ isActive: false })
+        this.setState({ isActive: false });
     }
 
     render() {
@@ -105,6 +106,6 @@ export default class Login extends React.Component<{}, ILoginState> {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
