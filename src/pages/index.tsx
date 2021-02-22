@@ -1,22 +1,27 @@
-import React from "react"
-import "@styles/pages/index.scss"
-import { graphql } from "gatsby"
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Navbar from "@components/navbar"
-import Slider from "@components/index/slider"
-import Footer from "@components/footer"
+import Navbar from "@components/navbar";
+import Slider from "@components/index/slider";
+import Footer from "@components/footer";
+
+import "@styles/pages/index.scss";
+
+interface IIndexProps {
+    Slider: React.ReactNode;
+}
 
 interface IIndexProps {
     Slider: any
 }
 
 interface IIndexState {
-    goodsCategory: string[]
+    goodsCategory: string[];
 }
 
 class Index extends React.Component<IIndexProps, IIndexState> {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             goodsCategory: [
                 "女装 /内衣",
@@ -36,12 +41,12 @@ class Index extends React.Component<IIndexProps, IIndexState> {
                 "厨具 /收纳 /宠物",
                 "图书音像",
             ],
-        }
+        };
     }
 
     getGoodsCategory() {
-        let list = []
-        const goodsCategory = this.state.goodsCategory
+        let list = [];
+        const goodsCategory = this.state.goodsCategory;
         for (let i = 0; i < goodsCategory.length; i++) {
             i === 0
                 ? list.push(
@@ -53,9 +58,9 @@ class Index extends React.Component<IIndexProps, IIndexState> {
                       <li key={i}>
                           <a>{goodsCategory[i]}</a>
                       </li>
-                  )
+                  );
         }
-        return list
+        return list;
     }
 
     render() {
@@ -76,51 +81,62 @@ class Index extends React.Component<IIndexProps, IIndexState> {
                 </div>
                 <Footer />
             </div>
-        )
+        );
     }
 }
 
-export default ({ data }) => {
-    let imgSrcList = []
-    let linkList = []
-    let bgColorList = []
-    const edges = data.allMysqlSliders.edges
-    edges.forEach(element => {
-        const node = element.node
-        imgSrcList.push(node.imgPublicURL)
-        linkList.push(node.link)
+export default () => {
+    const {
+        allMysqlSlider: { edges },
+        allFile: { nodes },
+    } = useStaticQuery(graphql`
+        query {
+            allMysqlSlider(sort: { fields: mysqlId, order: ASC }) {
+                edges {
+                    node {
+                        name
+                        bgColor_R
+                        bgColor_G
+                        bgColor_B
+                        link
+                    }
+                }
+            }
+            allFile(
+                filter: { relativeDirectory: { eq: "img/sliders" } }
+                sort: { fields: name, order: ASC }
+            ) {
+                nodes {
+                    publicURL
+                }
+            }
+        }
+    `);
+
+    let imgPubURLList = [];
+    let linkList = [];
+    let bgColorList = [];
+    edges.forEach((element) => {
+        const node = element.node;
+        linkList.push(node.link);
         bgColorList.push(
             [node.bgColor_R, node.bgColor_G, node.bgColor_B].join(", ")
-        )
-    })
+        );
+    });
+    nodes.forEach((element) => {
+        imgPubURLList.push(element.publicURL);
+    });
 
     return (
         <Index
             Slider={
                 <Slider
                     amount={edges.length}
-                    imgSrcList={imgSrcList}
+                    imgSrcList={imgPubURLList}
                     linkList={linkList}
                     bgColorList={bgColorList}
                 />
             }
         ></Index>
-    )
-}
-
-// 从数据库获取本地文件路径
-export const query = graphql`
-    query {
-        allMysqlSliders {
-            edges {
-                node {
-                    imgPublicURL
-                    bgColor_R
-                    bgColor_G
-                    bgColor_B
-                    link
-                }
-            }
-        }
-    }
-`
+    );
+};
