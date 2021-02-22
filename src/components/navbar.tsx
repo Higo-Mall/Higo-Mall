@@ -1,12 +1,10 @@
-import React from "react";
-import { Link } from "gatsby";
-
-import Login from "@components/navbar/login";
-import Search from "@components/navbar/search";
+import React from "react"
+import Login from "@components/navbar/login"
+import Search from "@components/navbar/search"
 
 interface INavbarProps {
     // 搜索功能 页面跳转后在输入框内保留搜索内容
-    searchText?: string;
+    searchText?: string
 }
 
 export default class Navbar extends React.Component<INavbarProps> {
@@ -36,9 +34,7 @@ export default class Navbar extends React.Component<INavbarProps> {
 
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
-                        <Link to="/" className="navbar-item">
-                            首页
-                        </Link>
+                        <a className="navbar-item">首页</a>
 
                         <a className="navbar-item">...</a>
 
@@ -69,6 +65,6 @@ export default class Navbar extends React.Component<INavbarProps> {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }

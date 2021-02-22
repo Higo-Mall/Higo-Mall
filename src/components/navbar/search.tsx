@@ -1,51 +1,11 @@
-import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import React from "react"
+import { Link } from "gatsby"
 
 interface ISearchProps {
-    // liveSearchPublicURL
-    lspURL: string;
-    searchText?: string;
+    searchText?: string
 }
 
-interface ISearchState {
-    searchText: string;
-}
-
-class Search extends React.Component<ISearchProps, ISearchState> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchText: props.searchText,
-        };
-        // this.showResult = this.showResult.bind(this);
-    }
-
-    // showResult = (e) => {
-    //     const text = e.target.value;
-    //     if (text.length == 0) {
-    //         document.getElementById("liveSearch").innerHTML = "";
-    //         document.getElementById("liveSearch").style.border = "0px";
-    //         return;
-    //     }
-    //     if (window.XMLHttpRequest) {
-    //         // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行
-    //         var xmlhttp: any = new XMLHttpRequest();
-    //     } else {
-    //         // IE6, IE5 浏览器执行
-    //         var xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    //     }
-    //     xmlhttp.onreadystatechange = function () {
-    //         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-    //             document.getElementById("liveSearch").innerHTML =
-    //                 xmlhttp.responseText;
-    //             document.getElementById("liveSearch").style.border =
-    //                 "1px solid #A5ACB2";
-    //         }
-    //     };
-    //     xmlhttp.open("GET", this.props.lspURL + "?text=" + text, true);
-    //     xmlhttp.send();
-    // };
-
+export default class Search extends React.Component<ISearchProps> {
     render() {
         return (
             <div>
@@ -56,14 +16,12 @@ class Search extends React.Component<ISearchProps, ISearchState> {
                     >
                         <span className="control">
                             <input
-                                name="s"
+                                name="searchText"
                                 className="input is-info"
                                 type="text"
                                 placeholder="搜索"
-                                value={this.state.searchText}
-                                // onKeyUp={this.showResult}
+                                value={this.props.searchText}
                             />
-                            <div id="liveSearch"></div>
                         </span>
                         <span className="control">
                             <button className="button is-info" type="submit">
@@ -75,30 +33,6 @@ class Search extends React.Component<ISearchProps, ISearchState> {
                     </div>
                 </form>
             </div>
-        );
+        )
     }
 }
-
-export default ({ searchText }) => {
-    const {
-        allFile: {
-            edges: {
-                "0": {
-                    node: { publicURL },
-                },
-            },
-        },
-    } = useStaticQuery(graphql`
-        query {
-            allFile(filter: { name: { eq: "liveSearch" } }) {
-                edges {
-                    node {
-                        publicURL
-                    }
-                }
-            }
-        }
-    `);
-
-    return <Search lspURL={publicURL} searchText={searchText} />;
-};
