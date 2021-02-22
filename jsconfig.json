@@ -8,7 +8,7 @@
         "@static/*": ["./src/static/*"],
         "@templates/*": ["./src/templates/*"],
       },
-      // "target": "ES6",
+      "target": "ES5",
       "module": "commonjs",
       // "allowSyntheticDefaultImports": true,
       "jsx": "react"

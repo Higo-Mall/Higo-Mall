@@ -1,17 +1,27 @@
-import React from "react";
-
-import { Img, Nav, ImgSwitch } from "@templates/img-switch";
-
-import "@styles/components/item/product-intro.scss";
+import React from "react"
+import { Img, Nav, ImgSwitch } from "@templates/img-switch"
+import "@styles/components/item/product-intro.scss"
 
 // Preview组件开始
 class PreviewImg extends Img {
+    handleVideoIconClick() {}
+
     render() {
         return (
             <div className="main-img">
+                <span
+                    className="video-icon"
+                    onClick={this.handleVideoIconClick}
+                ></span>
                 <img className="spec-img" src={this.props.src} />
             </div>
-        );
+        )
+    }
+}
+
+class PreviewVideo extends React.Component {
+    render() {
+        return <div></div>
     }
 }
 
@@ -32,13 +42,13 @@ class PreviewNav extends Nav {
                     onMouseOver={this.props.handleNavMouseOver}
                 />
             </li>
-        );
+        )
     }
 }
 
 class Preview extends ImgSwitch {
     render() {
-        let previewNavList = [];
+        let previewNavList = []
         for (let i = 0; i < this.state.amount; i++) {
             previewNavList.push(
                 <PreviewNav
@@ -48,13 +58,14 @@ class Preview extends ImgSwitch {
                     src={this.props.navSrcList[i]}
                     handleNavMouseOver={this.handleNavMouseOver}
                 />
-            );
+            )
         }
         return (
             <div className="preview">
                 <PreviewImg
                     src={this.props.imgSrcList[this.state.selectedNo]}
                 />
+                <PreviewVideo />
                 <div className="spec-list">
                     <a className="arrow-prev">
                         <i className="sprite-arrow-prev"></i>
@@ -126,7 +137,7 @@ class Preview extends ImgSwitch {
                     <a>举报</a>
                 </div>
             </div>
-        );
+        )
     }
 }
 
@@ -136,7 +147,7 @@ class Preview extends ImgSwitch {
 // 未完成
 interface IInfoProps {
     // info: [name:string,]
-    info: [string, string];
+    info: [string, string]
 }
 
 class Info extends React.Component<IInfoProps> {
@@ -146,18 +157,18 @@ class Info extends React.Component<IInfoProps> {
                 <div className="name">{this.props.info[0]}</div>
                 <div className="news">{this.props.info[1]}</div>
             </div>
-        );
+        )
     }
 }
 // Info组件结束
 
 interface IProductIntroProps extends IInfoProps {
-    srcList: string[];
+    srcList: string[]
 }
 
 export default class ProductIntro extends React.Component<IProductIntroProps> {
     render() {
-        const srcList = this.props.srcList;
+        const srcList = this.props.srcList
         return (
             <div className="product-intro">
                 <Preview
@@ -167,6 +178,6 @@ export default class ProductIntro extends React.Component<IProductIntroProps> {
                 />
                 <Info info={this.props.info} />
             </div>
-        );
+        )
     }
 }
