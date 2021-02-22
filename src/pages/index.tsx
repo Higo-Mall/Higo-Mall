@@ -11,6 +11,10 @@ interface IIndexProps {
     Slider: React.ReactNode;
 }
 
+interface IIndexProps {
+    Slider: any
+}
+
 interface IIndexState {
     goodsCategory: string[];
 }
