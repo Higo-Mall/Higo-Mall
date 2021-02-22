@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 @import "bulma";
+
 .product-intro {
     width: 1210px;
     margin: 0 auto;
@@ -14,17 +15,6 @@
             position: relative;
             margin-bottom: 20px;
             padding: 0;
-
-            .video-icon {
-                position: absolute;
-                // bottom: 62px;
-                cursor: pointer;
-                display: inline-block;
-                width: 50px;
-                height: 50px;
-                background: url(//static.360buyimg.com/item/unite/1.0.114/components/default-soa/preview/i/main-circles.png)
-                    0 -55px no-repeat;
-            }
 
             .spec-img {
                 width: 350px;
