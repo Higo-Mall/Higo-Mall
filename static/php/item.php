@@ -2,12 +2,11 @@
 
 include("../../php/config.php");
 
-class BadRequestException extends Exception
+class NotFoundException extends Exception
 {
-    public function errorMessage()
+    public function handleError()
     {
-        $errorMsg = "Bad Request";
-        return $errorMsg;
+        header("HTTP/1.0 404 Not Found");
     }
 }
 
@@ -28,6 +27,8 @@ class BadRequestException extends Exception
 //     trigger_error($e->errorMessage(), E_USER_ERROR);
 // }
 
+
+// id数据在传入前已作数据控制
 $id = $_GET["id"];
 
 $servername = "localhost";
@@ -44,20 +45,29 @@ try {
     $stmt->bindParam(':id', $id);
 
     $stmt->execute();
-    // if ($stmt->rowCount()) {
-    //     $result = $stmt->fetch();
-    // } else {
-    //     throw new BadRequestException();
-    // }
-    $result = $stmt->fetch();
-}
-// catch (BadRequestException $e) {
-//     trigger_error($e->errorMessage(), E_USER_ERROR);
-// }
-catch (PDOException $e) {
-    echo $e->getMessage();
+    $rowCount = $stmt->rowCount();
+    if ($rowCount === 1) {
+        // 数据库中存在对应该id的商品数据
+        $dbResult = $stmt->fetch();
+
+        // $isNodePath = $ip . "/istatic/" . $id . "/node.json";
+        $isNodePath = $_SERVER["DOCUMENT_ROOT"] . "/istatic/" . $id . "/node.json";
+        if (file_exists($isNodePath)) {
+            $isResult = file_get_contents($isNodePath, "r");
+        } else {
+            throw new NotFoundException();
+        }
+    } elseif ($rowCount > 1) {
+        throw new PDOException();
+    } else {
+        throw new NotFoundException();
+    }
+} catch (NotFoundException $e) {
+    // 404 Not Found
+    $e->handleError();
+} catch (PDOException $e) {
+    header("HTTP/1.0 500 Internal Server Error");
 } finally {
     $conn = null;
+    exit(json_encode(array("id" => $id, "dbResult" => $dbResult, "isResult" => json_decode($isResult))));
 }
-
-exit(json_encode($result));

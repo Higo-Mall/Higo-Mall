@@ -1,77 +1,94 @@
 module.exports = {
-    // siteMetadata: {
-    //   title: `Title from siteMetadata`,
+  pathPrefix: "/higo",
+  siteMetadata: {
+    title: "嗨购商城",
+    description: "一个比赛项目",
+    author: "MindXL & YangHanWen",
+    domain: "192.168.201.128",
+  },
+  plugins: [
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-image`,
+    {
+      resolve: `gatsby-plugin-alias-imports`,
+      options: {
+        alias: {
+          "@components": "src/components",
+          "@styles": "src/styles",
+          "@static": "src/static",
+          "@templates": "src/templates",
+        },
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `static`,
+        path: `${__dirname}/static/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-mysql`,
+      options: {
+        connectionDetails: {
+          host: "localhost",
+          user: "root",
+          password: "123456",
+          database: "sql_192_168_201_",
+        },
+        queries: [
+          {
+            statement: "SELECT * FROM `slider`",
+            idFieldName: "id",
+            name: "slider",
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-source-mysql`,
+      options: {
+        connectionDetails: {
+          host: "localhost",
+          user: "root",
+          password: "123456",
+          database: "sql_192_168_201_",
+        },
+        queries: [
+          {
+            statement: "SELECT * FROM `item`",
+            idFieldName: "id",
+            name: "item",
+          },
+        ],
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        color: `tomato`,
+        showSpinner: false,
+      },
+    },
+    `gatsby-plugin-catch-links`,
+    // {
+    //   resolve: `gatsby-plugin-manifest`,
+    //   options: {
+    //     name: `gatsby-starter-default`,
+    //     short_name: `starter`,
+    //     start_url: `/`,
+    //     background_color: `#663399`,
+    //     theme_color: `#663399`,
+    //     display: `minimal-ui`,
+    //     icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+    //   },
     // },
-    plugins: [
-        `gatsby-plugin-remove-trailing-slashes`,
-        `gatsby-plugin-sass`,
-        {
-            resolve: `gatsby-plugin-alias-imports`,
-            options: {
-                alias: {
-                    "@components": "src/components",
-                    "@styles": "src/styles",
-                    "@static": "src/static",
-                    "@templates": "src/templates",
-                },
-            },
-        },
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: `static`,
-                path: `${__dirname}/static/`,
-            },
-        },
-        {
-            resolve: `gatsby-source-mysql`,
-            options: {
-                connectionDetails: {
-                    host: "localhost",
-                    user: "root",
-                    password: "123456",
-                    database: "sql_192_168_201_",
-                },
-                queries: [
-                    {
-                        statement: "SELECT * FROM `slider`",
-                        idFieldName: "id",
-                        name: "slider",
-                    },
-                ],
-            },
-        },
-        {
-            resolve: `gatsby-source-mysql`,
-            options: {
-                connectionDetails: {
-                    host: "localhost",
-                    user: "root",
-                    password: "123456",
-                    database: "sql_192_168_201_",
-                },
-                queries: [
-                    {
-                        statement: "SELECT * FROM `item`",
-                        idFieldName: "id",
-                        name: "item",
-                    },
-                ],
-            },
-        },
-        {
-            resolve: `gatsby-plugin-manifest`,
-            options: {
-                name: `嗨购商城`,
-                short_name: `Higo Mall`,
-                start_url: `/`,
-                // background_color: `#f7f0eb`,
-                // theme_color: `#a2466c`,
-                display: `standalone`,
-                icon: `static/favicon.ico`,
-            },
-        },
-        `gatsby-plugin-offline`,
-    ],
-};
-
+    // `gatsby-plugin-gatsby-cloud`,
+    // this (optional) plugin enables Progressive Web App + Offline functionality
+    // To learn more, visit: https://gatsby.dev/offline
+    // `gatsby-plugin-offline`,
+  ],
+}

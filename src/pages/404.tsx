@@ -7,7 +7,7 @@ export default class Room404 extends React.Component {
     render() {
         return (
             <div>
-                <Navbar />
+                <Navbar seoSubTitle="404" />
                 <div
                     className="content has-text-centered"
                     style={{ height: "400px", padding: "10%" }}

@@ -10,10 +10,7 @@ class SliderImg extends Img {
             <div
                 className="sliderContent"
                 style={{
-                    backgroundColor: "rgb(%s)".replace(
-                        "%s",
-                        this.props.bgColor
-                    ),
+                    backgroundColor: `rgb(${this.props.bgColor})`,
                 }}
             >
                 <a href={this.props.link}>

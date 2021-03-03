@@ -1,4 +1,5 @@
 // One item, one html, with item.tsx in src/templates
+
 // const path = require(`path`);
 // exports.onCreateNode = ({ node, actions }) => {
 //     const { createNodeField } = actions;

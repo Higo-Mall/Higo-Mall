@@ -9,7 +9,7 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$sql = "SELECT `name`, `tags_CN`, `tags_EN`, `brand_CN`, `brand_EN` FROM `item`";
+$sql = "SELECT `name`, `tags_ZH`, `tags_EN`, `brand_ZH`, `brand_EN` FROM `item`";
 $result = $conn->query($sql);
 
 if ($result === FALSE) {

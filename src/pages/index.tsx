@@ -1,5 +1,5 @@
 import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import { graphql } from "gatsby";
 
 import Navbar from "@components/navbar";
 import Slider from "@components/index/slider";
@@ -7,12 +7,53 @@ import Footer from "@components/footer";
 
 import "@styles/pages/index.scss";
 
-interface IIndexProps {
-    Slider: React.ReactNode;
-}
+export const query = graphql`
+    query {
+        allMysqlSlider(sort: { fields: mysqlId, order: ASC }) {
+            edges {
+                node {
+                    name
+                    bgColor_R
+                    bgColor_G
+                    bgColor_B
+                    link
+                }
+            }
+        }
+        allFile(
+            filter: { relativeDirectory: { eq: "img/sliders" } }
+            sort: { fields: name, order: ASC }
+        ) {
+            nodes {
+                publicURL
+            }
+        }
+    }
+`;
+
+type QueryData = {
+    allMysqlSlider: {
+        edges: [
+            ...[
+                {
+                    node: {
+                        name: string;
+                        bgColor_R: number;
+                        bgColor_G: number;
+                        bgColor_B: number;
+                        link: string;
+                    };
+                }
+            ]
+        ];
+    };
+    allFile: {
+        nodes: [...[{ publicURL: string }]];
+    };
+};
 
 interface IIndexProps {
-    Slider: any
+    data: QueryData;
 }
 
 interface IIndexState {
@@ -44,7 +85,7 @@ class Index extends React.Component<IIndexProps, IIndexState> {
         };
     }
 
-    getGoodsCategory() {
+    setGoodsCategory() {
         let list = [];
         const goodsCategory = this.state.goodsCategory;
         for (let i = 0; i < goodsCategory.length; i++) {
@@ -64,17 +105,39 @@ class Index extends React.Component<IIndexProps, IIndexState> {
     }
 
     render() {
+        console.log(this.props.data);
+        const edges = this.props.data.allMysqlSlider.edges;
+        const nodes = this.props.data.allFile.nodes;
+        let imgPubURLList = [];
+        let linkList = [];
+        let bgColorList = [];
+        edges.forEach((element) => {
+            const node = element.node;
+            linkList.push(node.link);
+            bgColorList.push(
+                [node.bgColor_R, node.bgColor_G, node.bgColor_B].join(", ")
+            );
+        });
+        nodes.forEach((element) => {
+            imgPubURLList.push(element.publicURL);
+        });
+
         return (
             <div id="index">
                 <Navbar />
 
                 <div id="content" className="hero_">
-                    {this.props.Slider}
+                    <Slider
+                        amount={edges.length}
+                        imgSrcList={imgPubURLList}
+                        linkList={linkList}
+                        bgColorList={bgColorList}
+                    />
                     <div className="hero-body">
                         <div className="category">
                             <p className="category-label">商品分类</p>
                             <ul className="category-list">
-                                {this.getGoodsCategory()}
+                                {this.setGoodsCategory()}
                             </ul>
                         </div>
                     </div>
@@ -85,58 +148,4 @@ class Index extends React.Component<IIndexProps, IIndexState> {
     }
 }
 
-export default () => {
-    const {
-        allMysqlSlider: { edges },
-        allFile: { nodes },
-    } = useStaticQuery(graphql`
-        query {
-            allMysqlSlider(sort: { fields: mysqlId, order: ASC }) {
-                edges {
-                    node {
-                        name
-                        bgColor_R
-                        bgColor_G
-                        bgColor_B
-                        link
-                    }
-                }
-            }
-            allFile(
-                filter: { relativeDirectory: { eq: "img/sliders" } }
-                sort: { fields: name, order: ASC }
-            ) {
-                nodes {
-                    publicURL
-                }
-            }
-        }
-    `);
-
-    let imgPubURLList = [];
-    let linkList = [];
-    let bgColorList = [];
-    edges.forEach((element) => {
-        const node = element.node;
-        linkList.push(node.link);
-        bgColorList.push(
-            [node.bgColor_R, node.bgColor_G, node.bgColor_B].join(", ")
-        );
-    });
-    nodes.forEach((element) => {
-        imgPubURLList.push(element.publicURL);
-    });
-
-    return (
-        <Index
-            Slider={
-                <Slider
-                    amount={edges.length}
-                    imgSrcList={imgPubURLList}
-                    linkList={linkList}
-                    bgColorList={bgColorList}
-                />
-            }
-        ></Index>
-    );
-};
+export default Index;
