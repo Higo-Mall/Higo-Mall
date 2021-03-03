@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from "gatsby";
 
 interface IGRProps {
     phpURL: string;
+    data: any;
 }
 
 class GoodRegister extends React.Component<IGRProps> {
@@ -94,7 +95,7 @@ class GoodRegister extends React.Component<IGRProps> {
             <div>
                 <form
                     encType="multipart/form-data"
-                    action={this.props.phpURL}
+                    action={this.props.data.file.publicURL}
                     method="post"
                 >
                     {inputs}
@@ -129,27 +130,12 @@ class GoodRegister extends React.Component<IGRProps> {
     }
 }
 
-export default () => {
-    const {
-        allFile: {
-            edges: {
-                "0": {
-                    node: { publicURL },
-                },
-            },
-        },
-    } = useStaticQuery(graphql`
-        query {
-            allFile(filter: { base: { eq: "goodRegister.php" } }) {
-                edges {
-                    node {
-                        publicURL
-                    }
-                }
-            }
-        }
-    `);
-    // const publicURL = "../php/goodRegister.php"
+export default GoodRegister;
 
-    return <GoodRegister phpURL={publicURL} />;
-};
+export const query = graphql`
+    query {
+        file(base: { eq: "goodRegister.php" }) {
+            publicURL
+        }
+    }
+`;

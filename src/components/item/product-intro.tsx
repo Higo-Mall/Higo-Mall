@@ -27,6 +27,8 @@ class PreviewNav extends Nav {
                     data-eid={this.state.eid}
                     className={
                         "spec-item " + (this.state.selected ? "selected" : "")
+                        // 这里使用ES6的语法糖没有字符串直接拼接看的清楚
+                        // `spec-item ${this.state.selected ? "selected" : ""}`
                     }
                     src={this.props.src}
                     onMouseOver={this.props.handleNavMouseOver}
@@ -135,7 +137,6 @@ class Preview extends ImgSwitch {
 // Info组件开始
 // 未完成
 interface IInfoProps {
-    // info: [name:string,]
     info: [string, string];
 }
 

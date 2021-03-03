@@ -52,9 +52,6 @@ export class ImgSwitch extends React.Component<
 > {
     constructor(props) {
         super(props);
-        // if (props.amount <= 0) {
-        //     Error.call("error!")
-        // }
         this.state = {
             amount: props.amount,
             selectedNo: 0,

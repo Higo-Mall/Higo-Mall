@@ -1,10 +1,25 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
+// export const query = graphql`
+//     query {
+//         file(base: { eq: "liveSearch.php" }) {
+//             publicURL
+//         }
+//     }
+// `;
+
+type QueryData = {
+    file: {
+        publicURL: string;
+    };
+};
+
 interface ISearchProps {
     // liveSearchPublicURL
-    lspURL: string;
+    lspURL?: string;
     searchText?: string;
+    data?: QueryData;
 }
 
 interface ISearchState {
@@ -47,6 +62,8 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     // };
 
     render() {
+        console.log(this.props.data);
+        // console.log(this.props.data.file.publicURL);
         return (
             <div>
                 <form action="/search/" method="get">
@@ -69,8 +86,6 @@ class Search extends React.Component<ISearchProps, ISearchState> {
                             <button className="button is-info" type="submit">
                                 搜索
                             </button>
-
-                            {/* <Link className="button is-info" to="/search/" state={{"text": "123"}} >搜索</Link> */}
                         </span>
                     </div>
                 </form>
@@ -79,26 +94,38 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     }
 }
 
-export default ({ searchText }) => {
-    const {
-        allFile: {
-            edges: {
-                "0": {
-                    node: { publicURL },
-                },
-            },
-        },
-    } = useStaticQuery(graphql`
+// export default ({ searchText }) => {
+//     const {
+//         allFile: {
+//             edges: {
+//                 "0": {
+//                     node: { publicURL },
+//                 },
+//             },
+//         },
+//     } = useStaticQuery(graphql`
+//         query {
+//             allFile(filter: { name: { eq: "liveSearch" } }) {
+//                 edges {
+//                     node {
+//                         publicURL
+//                     }
+//                 }
+//             }
+//         }
+//     `);
+
+//     return <Search lspURL={publicURL} searchText={searchText} />;
+// };
+
+export default Search;
+
+export const query = () => {
+    return useStaticQuery(graphql`
         query {
-            allFile(filter: { name: { eq: "liveSearch" } }) {
-                edges {
-                    node {
-                        publicURL
-                    }
-                }
+            file(base: { eq: "liveSearch.php" }) {
+                publicURL
             }
         }
     `);
-
-    return <Search lspURL={publicURL} searchText={searchText} />;
 };

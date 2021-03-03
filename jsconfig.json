@@ -1,18 +1,18 @@
 {
     "compilerOptions": {
-      "baseUrl": ".",
-      "paths": {
-        // "@/*": ["src/*"]
-        "@components/*": ["./src/components/*"],
-        "@styles/*": ["./src/styles/*"],
-        "@static/*": ["./src/static/*"],
-        "@templates/*": ["./src/templates/*"],
-      },
-      // "target": "ES6",
-      "module": "commonjs",
-      // "allowSyntheticDefaultImports": true,
-      "jsx": "react"
-    },
+        "baseUrl": ".",
+        "paths": {
+            // "@/*": ["src/*"]
+            "@components/*": ["./src/components/*"],
+            "@styles/*": ["./src/styles/*"],
+            "@static/*": ["./src/static/*"],
+            "@templates/*": ["./src/templates/*"]
+        },
+        // "target": "ES6",
+        "module": "commonjs",
+        // "allowSyntheticDefaultImports": true,
+        "jsx": "react"
+    }
     // "include": ["src/**/*"],
     // "exclude": ["node_modules"]
 }

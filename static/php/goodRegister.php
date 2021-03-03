@@ -9,7 +9,7 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO `item` (`id`, `name`, `tags_CN`, `tags_EN`, `brand_CN`, `brand_EN`, `price`, `inventory`, `time`, `map1`, `map2`, `map3`) VALUES ('";
+$sql = "INSERT INTO `item` (`id`, `name`, `tags_ZH`, `tags_EN`, `brand_ZH`, `brand_EN`, `price`, `inventory`, `time`, `map1`, `map2`, `map3`) VALUES ('";
 
 // 左侧补零
 function p($input, $pad_lenth = 2)
@@ -26,9 +26,9 @@ $maps = array($map1, $map2, $map3);
 $id = p($map1) . p($map2) . p($map3) . substr($time, -6) . p(rand(0, 999), 3);
 $sql .= $id . "', '";
 $sql .= $_POST["name"] . "', '";
-$sql .= $_POST["tags_CN"] . "', '";
+$sql .= $_POST["tags_ZH"] . "', '";
 $sql .= $_POST["tags_EN"] . "', '";
-$sql .= $_POST["brand_CN"] . "', '";
+$sql .= $_POST["brand_ZH"] . "', '";
 $sql .= $_POST["brand_EN"] . "', ";
 $sql .= $_POST["price"] . ", ";
 $sql .= $_POST["inventory"] . ", '";
