@@ -1,9 +1,21 @@
 import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import { graphql } from "gatsby";
+
+export const query = graphql`
+    query {
+        file(base: { eq: "goodRegister.php" }) {
+            publicURL
+        }
+    }
+`;
+
+type QueryData = {
+    file: { publicURL: string };
+};
 
 interface IGRProps {
     phpURL: string;
-    data: any;
+    data: QueryData;
 }
 
 class GoodRegister extends React.Component<IGRProps> {
@@ -131,11 +143,3 @@ class GoodRegister extends React.Component<IGRProps> {
 }
 
 export default GoodRegister;
-
-export const query = graphql`
-    query {
-        file(base: { eq: "goodRegister.php" }) {
-            publicURL
-        }
-    }
-`;

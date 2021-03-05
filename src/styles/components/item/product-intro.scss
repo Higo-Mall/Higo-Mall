@@ -123,5 +123,16 @@
         .news {
             color: #e4393c;
         }
+
+        #choose-btns {
+            #choose-amount {
+                @extend .field;
+                @extend .has-addons;
+
+                p {
+                    @extend .control;
+                }
+            }
+        }
     }
 }

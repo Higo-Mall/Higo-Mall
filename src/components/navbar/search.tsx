@@ -1,13 +1,7 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
-// export const query = graphql`
-//     query {
-//         file(base: { eq: "liveSearch.php" }) {
-//             publicURL
-//         }
-//     }
-// `;
+// 组件无法通过export const来执行graphql，只能用useStaticQuery
 
 type QueryData = {
     file: {
@@ -62,8 +56,6 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     // };
 
     render() {
-        console.log(this.props.data);
-        // console.log(this.props.data.file.publicURL);
         return (
             <div>
                 <form action="/search/" method="get">
@@ -71,7 +63,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
                         className="field has-addons"
                         style={{ marginRight: "100px" }}
                     >
-                        <span className="control">
+                        <p className="control">
                             <input
                                 name="s"
                                 className="input is-info"
@@ -81,12 +73,12 @@ class Search extends React.Component<ISearchProps, ISearchState> {
                                 // onKeyUp={this.showResult}
                             />
                             <div id="liveSearch"></div>
-                        </span>
-                        <span className="control">
+                        </p>
+                        <p className="control">
                             <button className="button is-info" type="submit">
                                 搜索
                             </button>
-                        </span>
+                        </p>
                     </div>
                 </form>
             </div>
@@ -94,38 +86,16 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     }
 }
 
-// export default ({ searchText }) => {
-//     const {
-//         allFile: {
-//             edges: {
-//                 "0": {
-//                     node: { publicURL },
-//                 },
-//             },
-//         },
-//     } = useStaticQuery(graphql`
-//         query {
-//             allFile(filter: { name: { eq: "liveSearch" } }) {
-//                 edges {
-//                     node {
-//                         publicURL
-//                     }
-//                 }
-//             }
-//         }
-//     `);
-
-//     return <Search lspURL={publicURL} searchText={searchText} />;
-// };
-
-export default Search;
-
-export const query = () => {
-    return useStaticQuery(graphql`
+export default ({ searchText }) => {
+    const {
+        file: { publicURL },
+    } = useStaticQuery(graphql`
         query {
             file(base: { eq: "liveSearch.php" }) {
                 publicURL
             }
         }
     `);
+
+    return <Search lspURL={publicURL} searchText={searchText} />;
 };

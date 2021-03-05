@@ -1,15 +1,12 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import SEO from "@components/seo";
 import Login from "@components/navbar/login";
 import Search from "@components/navbar/search";
 
 interface INavbarProps {
     // 搜索功能 页面跳转后在输入框内保留搜索内容
     searchText?: string;
-    seoTitle?: string;
-    seoSubTitle?: string;
 }
 
 export default class Navbar extends React.Component<INavbarProps> {
@@ -20,10 +17,6 @@ export default class Navbar extends React.Component<INavbarProps> {
                 role="navigation"
                 aria-label="main navigation"
             >
-                <SEO
-                    title={this.props.seoTitle}
-                    subTitle={this.props.seoSubTitle}
-                />
                 <div className="navbar-brand">
                     <a className="navbar-item" href="">
                         <div className="is-large">picture</div>

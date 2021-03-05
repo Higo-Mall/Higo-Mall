@@ -18,10 +18,7 @@ class PreviewImg extends Img {
 class PreviewNav extends Nav {
     render() {
         return (
-            <li
-                key={this.state.eid}
-                // className={this.state.selected ? "previewNavSelecteded" : ""}
-            >
+            <li key={this.state.eid}>
                 <img
                     key={this.state.eid}
                     data-eid={this.state.eid}
@@ -68,60 +65,6 @@ class Preview extends ImgSwitch {
                         <ul>{previewNavList}</ul>
                     </div>
                 </div>
-                {/* <div className="pagination">
-                    <a className="pagination-previous">Previous</a>
-                    <a className="pagination-next">Next page</a>
-                    <ul className="pagination-list">
-                        <li>
-                            <a
-                                className="pagination-link"
-                                aria-label="Goto page 1"
-                            >
-                                1
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="pagination-link"
-                                aria-label="Goto page 1"
-                            >
-                                1
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="pagination-link"
-                                aria-label="Goto page 1"
-                            >
-                                1
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="pagination-link"
-                                aria-label="Goto page 1"
-                            >
-                                1
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="pagination-link"
-                                aria-label="Goto page 1"
-                            >
-                                1
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="pagination-link"
-                                aria-label="Goto page 1"
-                            >
-                                1
-                            </a>
-                        </li>
-                    </ul>
-                </div> */}
                 <div className="preview-info">
                     <a>关注</a>
                     <a>...</a>
@@ -135,17 +78,94 @@ class Preview extends ImgSwitch {
 // Preview组件结束
 
 // Info组件开始
-// 未完成
 interface IInfoProps {
     info: [string, string];
 }
 
-class Info extends React.Component<IInfoProps> {
+interface IInfoState {
+    buyNum: number;
+    btnRClass: string;
+    btnAClass: string;
+}
+
+class Info extends React.Component<IInfoProps, IInfoState> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            buyNum: 1,
+            btnRClass: "is-static",
+            btnAClass: "is-primary",
+        };
+        this.handleBtnRClick = this.handleBtnRClick.bind(this);
+        this.handleBtnAClick = this.handleBtnAClick.bind(this);
+        this.handleBuyNumChange = this.handleBuyNumChange.bind(this);
+    }
+
+    handleBtnRClick() {
+        const next = this.state.buyNum - 1;
+        if (next >= 1) {
+            let nextState = { buyNum: next };
+            if (next == 1)
+                next == 1 ? (nextState["btnRClass"] = "is-static") : null;
+            this.setState(nextState);
+        }
+    }
+
+    handleBtnAClick() {
+        const next = this.state.buyNum + 1;
+        let nextState = { buyNum: next };
+        next > 1 ? (nextState["btnRClass"] = "is-danger") : null;
+        this.setState(nextState);
+    }
+
+    handleBuyNumChange(e) {
+        // 此处必须转化为number类型，否则将作为string类型的e.target.value赋出后，组件的内在state.buyNum将被变更为string类型
+        // 表现：触发handleBtnAClick()后，buyNum作为字符串在最后增加了"1"，如"10"->"101"
+        const next = Number(e.target.value);
+        if (next >= 1) {
+            let nextState = { buyNum: next };
+            nextState["btnRClass"] = next == 1 ? "is-static" : "is-danger";
+            this.setState(nextState);
+        } else {
+            this.setState({ buyNum: 1, btnRClass: "is-static" });
+        }
+    }
+
     render() {
         return (
             <div className="info">
                 <div className="name">{this.props.info[0]}</div>
                 <div className="news">{this.props.info[1]}</div>
+                <div id="choose-btns">
+                    <div id="choose-amount">
+                        <p>
+                            <button
+                                id="btn-reduce"
+                                className={`button is-medium ${this.state.btnRClass}`}
+                                onClick={this.handleBtnRClick}
+                            >
+                                -
+                            </button>
+                        </p>
+                        <p style={{ width: "20%" }}>
+                            <input
+                                id="buy-num"
+                                className="input is-medium"
+                                value={this.state.buyNum}
+                                onChange={this.handleBuyNumChange}
+                            />
+                        </p>
+                        <p>
+                            <button
+                                id="btn-add"
+                                className={`button is-medium ${this.state.btnAClass}`}
+                                onClick={this.handleBtnAClick}
+                            >
+                                +
+                            </button>
+                        </p>
+                    </div>
+                </div>
             </div>
         );
     }

@@ -5,6 +5,9 @@ module.exports = {
     description: "一个比赛项目",
     author: "MindXL & YangHanWen",
     domain: "192.168.201.128",
+    // domain: "www.mindxl.site",
+    istaticDomain: "192.168.201.128/istatic/",
+    // istaticDomain: "higois.mindxl.site/",
   },
   plugins: [
     `gatsby-plugin-sass`,
@@ -26,24 +29,6 @@ module.exports = {
       options: {
         name: `static`,
         path: `${__dirname}/static/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-mysql`,
-      options: {
-        connectionDetails: {
-          host: "localhost",
-          user: "root",
-          password: "123456",
-          database: "sql_192_168_201_",
-        },
-        queries: [
-          {
-            statement: "SELECT * FROM `slider`",
-            idFieldName: "id",
-            name: "slider",
-          },
-        ],
       },
     },
     {

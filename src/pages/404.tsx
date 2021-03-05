@@ -1,13 +1,13 @@
 import React from "react";
 
-import Navbar from "@components/navbar";
-import Footer from "@components/footer";
+import SEO from "@components/seo";
 
 export default class Room404 extends React.Component {
     render() {
         return (
             <div>
-                <Navbar seoSubTitle="404" />
+                <SEO subTitle="404" />
+
                 <div
                     className="content has-text-centered"
                     style={{ height: "400px", padding: "10%" }}
@@ -15,7 +15,6 @@ export default class Room404 extends React.Component {
                     <h1>404!</h1>
                     <h2>我不是此地的页面！</h2>
                 </div>
-                <Footer />
             </div>
         );
     }
