@@ -1,10 +1,10 @@
 import React from "react";
-import { useStaticQuery, graphql, navigate } from "gatsby";
+import { graphql, navigate } from "gatsby";
 import axios from "axios";
 
-import Navbar from "@components/navbar";
+import SEO from "@components/seo";
 import ProductIntro from "@components/item/product-intro";
-import Footer from "@components/footer";
+import ProductDetail from "@components/item/product-detail";
 
 import "@styles/pages/item.scss";
 
@@ -12,7 +12,7 @@ export const query = graphql`
     query {
         site {
             siteMetadata {
-                domain
+                istaticDomain
             }
         }
         file(base: { eq: "item.php" }) {
@@ -24,7 +24,7 @@ export const query = graphql`
 type QueryData = {
     site: {
         siteMetadata: {
-            domain: string;
+            istaticDomain: string;
         };
     };
     file: {
@@ -33,13 +33,26 @@ type QueryData = {
 };
 
 interface IItemProps {
-    // domain: string;
-    // publicURL: string;
     data: QueryData;
 }
 
+type PHPData = {
+    id: string;
+    dbResult: {
+        name: string;
+    };
+    isResult: {
+        info: {
+            name: string;
+            news: string;
+        };
+        intro: string[];
+        detail: string[];
+    };
+};
+
 interface IItemState {
-    data: object;
+    data: PHPData;
 }
 
 class Item extends React.Component<IItemProps, IItemState> {
@@ -65,6 +78,7 @@ class Item extends React.Component<IItemProps, IItemState> {
                         // ?结果中多出0,1,2等键指向重复的值，是理想结果的两倍
                         // https://github.com/Higo-Mall/Higo-Mall/issues/4
                         // wontfix for now
+                        // 似乎是axios返回过程中的正常现象，axios将可转化为对象的字符串自动转化了
                         const { data } = response;
                         typeof data === "object" ? resolve(data) : reject();
                     })
@@ -78,7 +92,7 @@ class Item extends React.Component<IItemProps, IItemState> {
         });
 
         promise
-            .then((value: object) => {
+            .then((value: PHPData) => {
                 this.setState({ data: value });
             })
             .catch((error) => {
@@ -87,7 +101,7 @@ class Item extends React.Component<IItemProps, IItemState> {
             });
     }
 
-    render() {
+    renderIfPHP() {
         const data = this.state.data;
         if (!data) {
             return <div></div>;
@@ -95,34 +109,43 @@ class Item extends React.Component<IItemProps, IItemState> {
 
         const urlPre =
             "http://" +
-            this.props.data.site.siteMetadata.domain +
-            "/istatic/" +
-            data["id"];
+            this.props.data.site.siteMetadata.istaticDomain +
+            "/object/" +
+            data.id;
         const introPre = urlPre + "/intro/";
         const detailPre = urlPre + "/detail/";
 
         let introSrcList = [];
-        data["isResult"]["intro"].forEach((element) => {
+        data.isResult.intro.forEach((element) => {
             introSrcList.push(introPre + element);
         });
 
         let detailSrcList = [];
-        data["isResult"]["detail"].forEach((element) => {
+        data.isResult.detail.forEach((element) => {
             detailSrcList.push(detailPre + element);
         });
         return (
+            <div>
+                <div id="product-intro-wrap" className="level">
+                    <ProductIntro
+                        srcList={introSrcList}
+                        info={data.isResult.info}
+                    />
+                </div>
+                <div id="product-detail-wrap">
+                    <ProductDetail srcList={detailSrcList} />
+                </div>
+            </div>
+        );
+    }
+
+    render() {
+        const data = this.state.data;
+        return (
             <div id="item">
-                <Navbar seoSubTitle={data["dbResult"]["name"]} />
+                <SEO subTitle={data?.dbResult?.name} />
 
-                <ProductIntro
-                    srcList={introSrcList}
-                    info={[
-                        "兰士顿 D4耳机入耳式有线降噪隔音 K歌音乐吃鸡游戏耳麦网课电脑办公麦克风 苹果vivo华为oppo手机通用 黑色",
-                        "【闪电发货】自营仓闪电发货，质保一年，用坏换新\n【震撼音效】四个喇叭高度解析，舒适入耳无痛佩戴\n【高清通话】高清通话降噪麦克风，手机通用！进店》》",
-                    ]}
-                />
-
-                <Footer />
+                {this.renderIfPHP()}
             </div>
         );
     }

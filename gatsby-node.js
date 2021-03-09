@@ -1,4 +1,4 @@
-// One item, one html, with item.tsx in src/templates
+// One item, one html, with one item.tsx in src/templates
 
 // const path = require(`path`);
 // exports.onCreateNode = ({ node, actions }) => {

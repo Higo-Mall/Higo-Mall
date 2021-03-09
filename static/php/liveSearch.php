@@ -20,7 +20,7 @@ $conn->close();
 
 
 // 从 URL 中获取参数 q 的值
-$text=$_GET["text"];
+$text = $_GET["text"];
 
 // 如果 q 参数存在则从 xml 文件中查找数据
 // if (strlen($text)>0)
@@ -69,7 +69,7 @@ $text=$_GET["text"];
 
 if ($result->num_rows > 0) {
     // 输出数据
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         echo $row["name"];
     }
 } else {

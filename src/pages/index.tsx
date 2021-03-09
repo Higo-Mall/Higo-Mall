@@ -1,62 +1,54 @@
 import React from "react";
 import { graphql } from "gatsby";
+import axios from "axios";
 
-import Navbar from "@components/navbar";
+import SEO from "@components/seo";
 import Slider from "@components/index/slider";
-import Footer from "@components/footer";
 
 import "@styles/pages/index.scss";
 
 export const query = graphql`
     query {
-        allMysqlSlider(sort: { fields: mysqlId, order: ASC }) {
-            edges {
-                node {
-                    name
-                    bgColor_R
-                    bgColor_G
-                    bgColor_B
-                    link
-                }
+        site {
+            siteMetadata {
+                istaticDomain
             }
         }
-        allFile(
-            filter: { relativeDirectory: { eq: "img/sliders" } }
-            sort: { fields: name, order: ASC }
-        ) {
-            nodes {
-                publicURL
-            }
+        file(base: { eq: "slider.php" }) {
+            publicURL
         }
     }
 `;
 
 type QueryData = {
-    allMysqlSlider: {
-        edges: [
-            ...[
-                {
-                    node: {
-                        name: string;
-                        bgColor_R: number;
-                        bgColor_G: number;
-                        bgColor_B: number;
-                        link: string;
-                    };
-                }
-            ]
-        ];
+    site: {
+        siteMetadata: {
+            istaticDomain: string;
+        };
     };
-    allFile: {
-        nodes: [...[{ publicURL: string }]];
+    file: {
+        publicURL: string;
     };
 };
+
+type PHPData = [
+    ...[
+        {
+            name: string;
+            link: string;
+            bgColor_R: string;
+            bgColor_G: string;
+            bgColor_B: string;
+        }
+    ]
+];
 
 interface IIndexProps {
     data: QueryData;
 }
 
 interface IIndexState {
+    data: PHPData;
     goodsCategory: string[];
 }
 
@@ -64,6 +56,7 @@ class Index extends React.Component<IIndexProps, IIndexState> {
     constructor(props) {
         super(props);
         this.state = {
+            data: null,
             goodsCategory: [
                 "女装 /内衣",
                 "男装 /运动户外",
@@ -104,35 +97,66 @@ class Index extends React.Component<IIndexProps, IIndexState> {
         return list;
     }
 
-    render() {
-        console.log(this.props.data);
-        const edges = this.props.data.allMysqlSlider.edges;
-        const nodes = this.props.data.allFile.nodes;
-        let imgPubURLList = [];
+    componentDidMount() {
+        let promise = new Promise((resolve, reject) => {
+            axios
+                .get(this.props.data.file.publicURL)
+                .then((response) => {
+                    const { data } = response;
+                    typeof data === "object" ? resolve(data) : reject();
+                })
+                .catch((error) => {
+                    reject();
+                    console.log(error);
+                });
+        });
+
+        promise
+            .then((value: PHPData) => {
+                this.setState({ data: value });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    renderIfPHP() {
+        const data = this.state.data;
+        if (!data) {
+            return <div></div>;
+        }
+
+        const urlPre =
+            "http://" +
+            this.props.data.site.siteMetadata.istaticDomain +
+            "slider/";
+
+        let imgSrcList = [];
         let linkList = [];
         let bgColorList = [];
-        edges.forEach((element) => {
-            const node = element.node;
-            linkList.push(node.link);
-            bgColorList.push(
-                [node.bgColor_R, node.bgColor_G, node.bgColor_B].join(", ")
-            );
-        });
-        nodes.forEach((element) => {
-            imgPubURLList.push(element.publicURL);
+        data.forEach((e) => {
+            imgSrcList.push(urlPre + e.name);
+            linkList.push(e.link);
+            bgColorList.push(`${e.bgColor_R}, ${e.bgColor_G}, ${e.bgColor_B}`);
         });
 
         return (
+            <Slider
+                amount={data.length}
+                imgSrcList={imgSrcList}
+                linkList={linkList}
+                bgColorList={bgColorList}
+            />
+        );
+    }
+
+    render() {
+        return (
             <div id="index">
-                <Navbar />
+                <SEO />
 
                 <div id="content" className="hero_">
-                    <Slider
-                        amount={edges.length}
-                        imgSrcList={imgPubURLList}
-                        linkList={linkList}
-                        bgColorList={bgColorList}
-                    />
+                    <div id="slider-wrap">{this.renderIfPHP()}</div>
                     <div className="hero-body">
                         <div className="category">
                             <p className="category-label">商品分类</p>
@@ -142,10 +166,11 @@ class Index extends React.Component<IIndexProps, IIndexState> {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
         );
     }
 }
 
 export default Index;
+
+export const a = "123";
