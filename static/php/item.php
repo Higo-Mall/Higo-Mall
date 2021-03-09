@@ -27,6 +27,8 @@ $servername = "localhost";
 $username = "root";
 $password = "123456";
 $dbname = "sql_192_168_201_";
+// $password = "0ff39e40ac40eb96";
+// $dbname = "mindxl_site";
 
 
 try {

@@ -3,12 +3,15 @@
 @import "bulma";
 
 .product-intro {
-    width: 1210px;
+    // width: 1210px;
+    @extend .level-item;
+    min-height: 550px;
     margin: 0 auto;
     .preview {
         @extend .card;
+        @extend .is-multiline;
         float: left;
-        width: 350px;
+        width: 450px;
 
         .main-img {
             @extend .card-content;
@@ -17,31 +20,35 @@
             padding: 0;
 
             .spec-img {
-                width: 350px;
-                height: 350px;
-                // min-height: 300px;
+                @extend .image;
+                width: 450px;
+                height: 450px;
             }
         }
 
         .spec-list {
             @extend .card-content;
-            margin-bottom: 18px;
+            @extend .columns;
+            // margin-bottom: 18px;
             position: relative;
-            padding: 0;
+            padding: 2%;
 
             .arrow {
+                @extend .column;
+                @extend .is-1;
+                z-index: 99;
                 display: block;
-                position: absolute;
-                width: 22px;
-                height: 32px;
-                top: 50%;
-                margin-top: -16px;
+                // position: absolute;
+                // width: 22px;
+                // height: 32px;
+                // top: 50%;
+                // margin-top: -16px;
             }
 
             .arrow-prev {
                 @extend .arrow;
-                float: left;
-                left: 0;
+                // float: left;
+                // left: 0;
                 .sprite-arrow-prev {
                     display: block;
                     width: 22px;
@@ -57,8 +64,8 @@
 
             .arrow-next {
                 @extend .arrow;
-                float: left;
-                right: 0;
+                // float: left;
+                // right: 0;
                 .sprite-arrow-next {
                     display: block;
                     width: 22px;
@@ -73,25 +80,34 @@
             }
 
             .spec-nav {
+                @extend .column;
+                @extend .is-10;
+                padding: 0;
                 position: relative;
-                width: 310px;
-                height: 58px;
+                // width: 310px;
+                height: 60px;
                 overflow: hidden;
-                margin: 0 auto;
+                // margin: 0 auto;
 
-                ul > li {
-                    margin: 0 2px;
-                    float: left;
-                    max-width: 60px;
-                    max-height: 70px;
+                ul {
+                    @extend .level;
 
-                    .spec-item {
-                        width: 54px;
-                        height: 54px;
-                        border: 2px solid #fff;
+                    li {
+                        @extend .level-item;
+                        margin: 0 2px;
+                        float: left;
+                        // max-width: 60px;
+                        // max-height: 70px;
 
-                        &.selected {
-                            border: 2px solid #e53e41;
+                        .spec-item {
+                            @extend .image;
+                            width: 60px;
+                            height: 60px;
+                            border: 2px solid #fff;
+
+                            &.selected {
+                                border: 2px solid #e53e41;
+                            }
                         }
                     }
                 }
@@ -109,28 +125,60 @@
 
     .info {
         width: 590px;
+        min-height: inherit;
         float: left;
         margin-left: 30px;
 
         .name {
-            font: 700 16px Arial, "microsoft yahei";
+            @extend .block;
+            @extend .is-size-5;
+            // @extend .has-text-justified;
+            // font: 700 16px Arial, "microsoft yahei";
             // color: #666;
-            padding-top: 10px;
-            line-height: 28px;
-            margin-bottom: 5px;
+            @extend .has-text-weight-bold;
+            // padding-top: 10px;
+            // line-height: 28px;
+            // margin-bottom: 5px;
         }
 
         .news {
-            color: #e4393c;
+            @extend .block;
+            @extend .is-size-6;
+            // @extend .has-text-justified;
+            @extend .has-text-danger-dark;
+            // color: #e4393c;
         }
 
-        #choose-btns {
-            #choose-amount {
-                @extend .field;
-                @extend .has-addons;
+        .choose-btns {
+            @extend .block;
+            @extend .columns;
+            // @extend .is-mobile;
+            position: relative;
+            bottom: 0;
 
-                p {
-                    @extend .control;
+            .choose-wrap {
+                @extend .column;
+                @extend .is-three-quarters;
+
+                .choose-amount {
+                    // @extend .column;
+                    // @extend .is-three-quarters;
+                    @extend .field;
+                    @extend .has-addons;
+                    @extend .has-addons-centered;
+
+                    p {
+                        @extend .control;
+                    }
+                }
+            }
+
+            .cart-wrap {
+                @extend .column;
+
+                #cart {
+                    @extend .button;
+                    @extend .is-medium;
                 }
             }
         }

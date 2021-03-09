@@ -5,9 +5,10 @@ module.exports = {
     description: "一个比赛项目",
     author: "MindXL & YangHanWen",
     domain: "192.168.201.128",
-    // domain: "www.mindxl.site",
-    istaticDomain: "192.168.201.128/istatic/",
-    // istaticDomain: "higois.mindxl.site/",
+    // domain: "mindxl.site",
+    // ip:"mindxl.site/higo",
+    istaticDomain: "192.168.201.128/istatic",
+    // istaticDomain: "mindxl.site/higo/istatic",
   },
   plugins: [
     `gatsby-plugin-sass`,

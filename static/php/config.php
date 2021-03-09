@@ -1,6 +1,6 @@
 <?php
-$domain = "192.168.201.128";
-// $domain = "mindxl.site";
+// $domain = "192.168.201.128";
+$domain = "mindxl.site/higo";
 $ip = "http://" . $domain;
 
 class NotFoundException extends Exception

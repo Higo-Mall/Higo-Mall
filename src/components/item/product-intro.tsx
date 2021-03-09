@@ -58,12 +58,12 @@ class Preview extends ImgSwitch {
                     <a className="arrow-prev">
                         <i className="sprite-arrow-prev"></i>
                     </a>
-                    <a className="arrow-next">
-                        <i className="sprite-arrow-next"></i>
-                    </a>
                     <div className="spec-nav">
                         <ul>{previewNavList}</ul>
                     </div>
+                    <a className="arrow-next">
+                        <i className="sprite-arrow-next"></i>
+                    </a>
                 </div>
                 <div className="preview-info">
                     <a>关注</a>
@@ -79,13 +79,14 @@ class Preview extends ImgSwitch {
 
 // Info组件开始
 interface IInfoProps {
-    info: [string, string];
+    info: { name: string; news: string };
 }
 
 interface IInfoState {
     buyNum: number;
     btnRClass: string;
     btnAClass: string;
+    cartClass: string;
 }
 
 class Info extends React.Component<IInfoProps, IInfoState> {
@@ -95,10 +96,12 @@ class Info extends React.Component<IInfoProps, IInfoState> {
             buyNum: 1,
             btnRClass: "is-static",
             btnAClass: "is-primary",
+            cartClass: "is-link",
         };
         this.handleBtnRClick = this.handleBtnRClick.bind(this);
         this.handleBtnAClick = this.handleBtnAClick.bind(this);
         this.handleBuyNumChange = this.handleBuyNumChange.bind(this);
+        this.handleCartClick = this.handleCartClick.bind(this);
     }
 
     handleBtnRClick() {
@@ -131,39 +134,57 @@ class Info extends React.Component<IInfoProps, IInfoState> {
         }
     }
 
+    handleCartClick() {}
+
     render() {
         return (
             <div className="info">
-                <div className="name">{this.props.info[0]}</div>
-                <div className="news">{this.props.info[1]}</div>
-                <div id="choose-btns">
-                    <div id="choose-amount">
-                        <p>
+                <div className="section">
+                    <div className="name">{this.props.info.name}</div>
+                    <div className="news">{this.props.info.news}</div>
+                </div>
+                <div className="section">
+                    <div className="choose-btns">
+                        <div className="choose-wrap">
+                            <div className="choose-amount">
+                                <p>
+                                    <button
+                                        id="btn-reduce"
+                                        className={`button is-medium ${this.state.btnRClass}`}
+                                        onClick={this.handleBtnRClick}
+                                    >
+                                        -
+                                    </button>
+                                </p>
+                                <p style={{ width: "20%" }}>
+                                    <input
+                                        id="buy-num"
+                                        className="input is-medium"
+                                        value={this.state.buyNum}
+                                        onChange={this.handleBuyNumChange}
+                                    />
+                                </p>
+                                <p>
+                                    <button
+                                        id="btn-add"
+                                        className={`button is-medium ${this.state.btnAClass}`}
+                                        onClick={this.handleBtnAClick}
+                                    >
+                                        +
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="cart-wrap">
                             <button
-                                id="btn-reduce"
-                                className={`button is-medium ${this.state.btnRClass}`}
-                                onClick={this.handleBtnRClick}
+                                id="cart"
+                                className={this.state.cartClass}
+                                onClick={this.handleCartClick}
                             >
-                                -
+                                加入购物车
                             </button>
-                        </p>
-                        <p style={{ width: "20%" }}>
-                            <input
-                                id="buy-num"
-                                className="input is-medium"
-                                value={this.state.buyNum}
-                                onChange={this.handleBuyNumChange}
-                            />
-                        </p>
-                        <p>
-                            <button
-                                id="btn-add"
-                                className={`button is-medium ${this.state.btnAClass}`}
-                                onClick={this.handleBtnAClick}
-                            >
-                                +
-                            </button>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

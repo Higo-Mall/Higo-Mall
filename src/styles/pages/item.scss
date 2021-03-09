@@ -1,3 +1,8 @@
 @charset "utf-8";
 
 @import "bulma";
+
+#item {
+    // @extend .level;
+    min-height: calc(100vh - 188px);
+}
