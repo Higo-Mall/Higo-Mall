@@ -21,7 +21,7 @@
     "gatsby-source-filesystem": "^3.0.0",
     "gatsby-source-mysql": "^2.2.3",
     "gatsby-transformer-sharp": "^3.0.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
